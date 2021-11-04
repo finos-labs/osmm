@@ -7,9 +7,9 @@
 // site configuration options.
 
 // Replace 'project-blueprint' with {project name}
-const projectName = 'Project Blueprint'
+const projectName = 'Open Source Maturity Model'
 // Replace 'project-blueprint' with {project name}
-const projectSlug = 'project-blueprint'
+const projectSlug = 'osmm'
 // Replace 'FINOS' with {name of copyright owner}
 const copyrightOwner = 'FINOS'
 
@@ -25,8 +25,8 @@ const siteConfig = {
   // Header menu
   headerLinks: [
     {doc: 'home', label: 'Docs'},
-    {doc: 'roadmap', label: 'Roadmap'},
-    {doc: 'team', label: 'Team'},
+    {doc: 'user', label: "User docs"},
+    {doc: 'admin', label: "Admin docs"},
     {href: `https://github.com/finos/${projectSlug}`, label: 'GitHub'},
     {blog: false}
   ],
