@@ -25,8 +25,6 @@ const siteConfig = {
   // Header menu
   headerLinks: [
     {doc: 'home', label: 'Docs'},
-    {doc: 'user', label: "User docs"},
-    {doc: 'admin', label: "Admin docs"},
     {href: `https://github.com/finos/${projectSlug}`, label: 'GitHub'},
     {blog: false}
   ],
