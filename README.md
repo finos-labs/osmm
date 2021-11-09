@@ -5,7 +5,9 @@ SPDX-License-Identifier: CC-BY-SA-4.0
  -->
 # Open Source Maturity Model
 
-<img src="./docs/img/finos-logotype.png" alt="FINOS logo" width="250px" hspace="5" style="vertical-align: middle;" />This repository contains documentation, scripts, and data files related to the Open Source Maturity Model. 
+<img src="./docs/img/finos-logotype.png" alt="FINOS logo" width="250px" hspace="5" style="vertical-align: middle;" />
+
+This repository contains documentation, scripts, and data files related to the Open Source Maturity Model. 
 
 The model is itself an open source project and is free to use, study, improve, and redistribute according to the license requirements.
 
@@ -50,4 +52,4 @@ Please see the [LICENSES](./LICENSES/) directory for the complete text for the p
 
 ## Attribution
 
-<a href="https://www.wipro.com/open-source/"><img src="./docs/img/wipro-logo.png" alt="Wipro logo" width="88px" hspace="5" style="vertical-align: middle;" /></a>The initial version of the Open Source Maturity Model was developed by and donated to FINOS by [Wipro Limited](https://www.wipro.com/open-source/).
+<a href="https://www.wipro.com/open-source/"><img src="./docs/img/wipro-logo.png" alt="Wipro logo" width="88px" hspace="5" style="vertical-align: middle;" /></a>The initial version of the Open Source Maturity Model was developed by and contributed to FINOS by [Wipro Limited](https://www.wipro.com/open-source/).
