@@ -13,3 +13,22 @@ docs/contributing.md
 
 # We use YARN
 website/package-lock.json
+
+
+# vim swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+#---
+*.*~
+*~
+*.txt~
+*.md~
+*.swp
+~$*
