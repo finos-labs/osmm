@@ -17,7 +17,9 @@ The Open Source Maturity Model (OSMM) allows you to understand where your organi
 
 By answering a series of questions, the OSMM framework evaluates your organization's open source maturity, providing a snapshot of its current stage. This stage is based on your organization's current culture, policies, processes, practices, and resources.
 
-<img src="./docs/img/dimensions-elements-stages.png" alt="A grid summarizing the Dimension, Elements, and Stages of the OSMM" width="250px" style="vertical-align: middle;float:left; margin-right:25px;" />The model defines the benefits of open source across three dimensions:
+<img src="./docs/img/dimensions-elements-stages.png" alt="A grid summarizing the Dimension, Elements, and Stages of the OSMM" width="250px" style="vertical-align: middle;float:left; margin-right:25px;" />
+
+The model defines the benefits of open source across three dimensions:
 
 1. Strategy
 2. Managmement
