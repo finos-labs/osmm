@@ -30,6 +30,38 @@ The next step is to import the OSMM survey structure file. This will create the 
 | Select **Choose file**, navigate to where you saved the survey structure file on your local system, select that file, select the **Convert resource links and expression fields?** option, then click **Import survey**. | <img src="../img/admin-import-osmm-step05.png" alt="Screenshot of the file selection controls on the Create, import or copy survey panel. The 'Choose file' option is circled." /> |
 | The survey will not take long to import. Once it's complete, you'll see the import survey summary success report. | <img src="../img/admin-import-osmm-step06.png" alt="Screenshot of the import summary success report." /> |
 
+## Apply the spider chart patches
+
+> ⚠️ This part of the document assumes that the reader has write access (command line, SFTP, etc.) to the machine where LimeSurvey is installed.
+
+The software that generates the spider chart is custom development for the OSMM project, not a standard feature of LimeSurvey. This custom development ("patch") must be installed manually.
+
+The patch files are located in the `code` folder in the OSMM GitHub repository. 
+
+**BACK UP THE FILES.** Most of the patch files are replacements for existing files in the LimeSurvey installation. They will overwrite the existing files. Prior to moving these files into place, you may wish to back them up to a safe location in case something goes wrong with your installation.
+
+Copy these files to the appropriate locations on your LimeSurvey installation. The file hierarchy in the `code` folder matches that of the LimeSurvey installation. Therefore each patch file should be placed in the same hierarchy on your installation. For instance, the `code/limesurvey/application/views/admin/export/statistics_user_view.php` file from the GitHub repository should be placed in the `limesurvey/application/views/admin/export` directory in your LimeSurvey installation.
+
+Here is a complete list of files, along with their destination paths in your LimeSurvey installation. Replacement files are denoted by a purple circle 🟣 and new files by a yellow square 🟨.
+
+* 🟣 /limesurvey/application/views/admin/export/statistics_user_view.php
+* 🟣 /limesurvey/application/helpers/common_helper.php
+* 🟣 /limesurvey/application/controllers/admin/statistics.php
+* 🟣 /limesurvey/application/helpers/admin/statistics_helper.php
+* 🟣 /limesurvey/application/controllers/PrintanswersController.php
+* 🟣 /limesurvey/themes/survey/vanilla/views/subviews/printanswers/printanswers_table.twig
+* 🟨 /limesurvey/application/views/admin/export/generatestats/simplestats/_statisticsoutput_aggregate_graphs.php
+* 🟨 /limesurvey/application/views/admin/export/generatestats/simplestats/_statisticsoutput_aggregate_bar_graphs.php
+
+The graphical visulization of output is customized using 2 different javascript chart libraries, those are ChartJS and ApexChart libraries and the corresponding libraries are available under:
+* 🟨 /limesurvey/assets/scripts/admin/dist* 
+* 🟣 /limesurvey/assets/scripts/admin/Chart.min.js
+These need to be copied to respective directory during installation.
+
+The maturity stage definitions are linked to the heatmap shown on the graphical output page. These are set of html files need to be copied under /limesurvey/ directory.
+
+* 🟨 /limesurvey/*.html
+
 ## Cautionary notes about modifying the survey
 
 Some portions of the survey setup are required for OSMM operations:

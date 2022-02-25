@@ -21,3 +21,7 @@ Companies and individuals can get a sense of the open source maturity level of t
 <img src="../img/spiderchart-example-summary.png" alt="An example of a spider chart summarizing an organization's open source maturity">
 
 These results are based solely upon the responses of the individual who took the survey. Of course, there will be different perspectives and levels of awareness and knowledge across the organization. A more detailed view of the organization's open source maturity is possible by contacting FINOS.
+
+A heatmap representation of the current stage maturity model also can be availed providing the details of Dimension, Elements and the stage representation carrying the score.
+
+<img src="../img/OSMM-HeatMaps.png" alt="An example of a heatmap summarizing an organization's open source maturity">
