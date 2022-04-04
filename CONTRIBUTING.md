@@ -33,8 +33,6 @@ For the same reason, your feedback is also welcome on the [open issues](/issues)
 
 ### Send a Pull Request
 
-> ⚠️ NOTE: All contributors must have a contributor license agreement (CLA) on file with FINOS before their pull requests will be merged. Please review the FINOS [contribution requirements](https://finosfoundation.atlassian.net/wiki/spaces/FINOS/pages/75530375/Contribution+Compliance+Requirements) and submit (or have your employer submit) the required CLA before submitting a pull request.
-
 The OSMM project accepts changes via [pull requests](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) (PR).
 
 Before making a contribution, please take the following steps:
