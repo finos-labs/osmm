@@ -9,9 +9,9 @@ SPDX-License-Identifier: CC-BY-SA-4.0
  -->
 ## Dimension: Strategy
 
-### Element: Goals, objectives, resources
+### Element: Goals, objectives, and corporate alignment
 
-#### Ad Hoc
+#### Unplanned
 
 -   Attributes
     -   No defined/communicated policy
