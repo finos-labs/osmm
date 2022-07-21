@@ -11,6 +11,7 @@ export DEST=/home/bitnami/stack
 cp -f $CHECKOUT/limesurvey/application/views/admin/export/statistics_user_view.php $DEST/limesurvey/application/views/admin/export
 cp -f $CHECKOUT/limesurvey/application/helpers/common_helper.php $DEST/limesurvey/application/helpers
 cp -f $CHECKOUT/limesurvey/application/controllers/admin/statistics.php $DEST/limesurvey/application/controllers/admin
+cp -f $CHECKOUT/limesurvey/application/controllers/colorcodes.csv $DEST/limesurvey/application/controllers
 cp -f $CHECKOUT/limesurvey/application/helpers/admin/statistics_helper.php $DEST/limesurvey/application/helpers/admin
 cp -f $CHECKOUT/limesurvey/application/controllers/PrintanswersController.php $DEST/limesurvey/application/controllers
 cp -f $CHECKOUT/limesurvey/themes/survey/vanilla/views/subviews/printanswers/printanswers_table.twig $DEST/limesurvey/themes/survey/vanilla/views/subviews/printanswers
