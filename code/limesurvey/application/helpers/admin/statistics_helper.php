@@ -363,11 +363,11 @@ function buildSelects($allfields, $surveyid, $language)
                 * these question types WON'T be handled here:
                 * M = Multiple choice
                 * T - Long free text
-                * Q - Multiple short text
+                * Q - Multiple Short Text
                 * D - Date
-                * N - Numerical input
+                * N - Numerical Input
                 * | - File Upload
-                * K - Multiple numerical input
+                * K - Multiple Numerical Input
                 */
             if (
                 $pv != "sid" && $pv != "display" && $firstletter != "M" && $firstletter != "P" && $firstletter != "T" &&
@@ -411,8 +411,8 @@ function buildSelects($allfields, $surveyid, $language)
                 }
             }
 
-                //N - Numerical input
-                //K - Multiple numerical input
+                //N - Numerical Input
+                //K - Multiple Numerical Input
             elseif ($firstletter == "N" || $firstletter == "K") {
                 //value greater than
                 if (substr($pv, strlen($pv) - 1, 1) == "G" && $_POST[$pv] != "") {
@@ -449,7 +449,7 @@ function buildSelects($allfields, $surveyid, $language)
             }
 
                 //T - Long free text
-                //Q - Multiple short text
+                //Q - Multiple Short Text
             elseif (($firstletter == "T" || $firstletter == "Q") && $_POST[$pv] != "") {
                 $selectSubs = array();
                 //We intepret and * and % as wildcard matches, and use ' OR ' and , as the separators
@@ -655,7 +655,7 @@ class statistics_helper
                 // This question type then can provide a % of the question answered in the summary.
                 $alist[] = array("Answer", gT("Answer"), $mfield);
                 $alist[] = array("NoAnswer", gT("No answer"), $mfield);
-                if ($qtype == Question::QT_SEMICOLON_ARRAY_TEXT) {
+                if ($qtype == Question::QT_SEMICOLON_ARRAY_MULTI_FLEX_TEXT) {
                     $qqid = $fielddata['qid']; // setting $qqid variable to parent qid enables graph for Array Text to be shown
                 }
             }
@@ -694,7 +694,7 @@ class statistics_helper
             $alist[] = array("NoAnswer", gT("No answer"), $mfield);
         }
 
-        // Ranking OPTION
+        //RANKING OPTION
         elseif ($sQuestionType == "R") {
             //getting the needed IDs somehow
             $lengthofnumeral = substr($rt, strpos($rt, "-") + 1, 1);
@@ -840,8 +840,8 @@ class statistics_helper
             }
         }
 
-        //N = Numerical input
-        //K = Multiple numerical input
+        //N = numerical input
+        //K = multiple numerical input
         elseif ($sQuestionType == "N" || $sQuestionType == "K") {
             //NUMERICAL TYPE
             //Zero handling
@@ -1144,8 +1144,8 @@ class statistics_helper
 
             //check question types
             switch ($qtype) {
-                // Array of 5 point choices (several items to rank!)
-                case Question::QT_A_ARRAY_5_POINT:
+                //Array of 5 point choices (several items to rank!)
+                case Question::QT_A_ARRAY_5_CHOICE_QUESTIONS:
                     //get data
                     $qresult = Question::model()->findAll(array('condition' => 'parent_qid=:parent_qid AND title=:title', 'params' => array(":parent_qid" => $qiqid, ':title' => $qanswer)));
                     //loop through results
@@ -1166,7 +1166,7 @@ class statistics_helper
 
 
 
-                    // Array of 10 point choices
+                    //Array of 10 point choices
                     //same as above just with 10 items
                 case Question::QT_B_ARRAY_10_CHOICE_QUESTIONS:
                     $qresult = Question::model()->findAll(array('condition' => 'parent_qid=:parent_qid AND title=:title', 'params' => array(":parent_qid" => $qiqid, ':title' => $qanswer)));
@@ -1183,7 +1183,7 @@ class statistics_helper
 
 
 
-                    // Array of Yes/No/gT("Uncertain")
+                    //Array of Yes/No/gT("Uncertain")
                 case Question::QT_C_ARRAY_YES_UNCERTAIN_NO:
                     $qresult = Question::model()->findAll(array('condition' => 'parent_qid=:parent_qid AND title=:title', 'params' => array(":parent_qid" => $qiqid, ':title' => $qanswer)));
                     //loop thorugh results
@@ -1201,9 +1201,9 @@ class statistics_helper
 
 
 
-                    // Array of Yes/No/gT("Uncertain")
+                    //Array of Yes/No/gT("Uncertain")
                     //same as above
-                case Question::QT_E_ARRAY_INC_SAME_DEC:
+                case Question::QT_E_ARRAY_OF_INC_SAME_DEC_QUESTIONS:
                     $qresult = Question::model()->findAll(array('condition' => 'parent_qid=:parent_qid AND title=:title', 'params' => array(":parent_qid" => $qiqid, ':title' => $qanswer)));
                     foreach ($qresult as $qrow) {
                         $alist[] = array("I", gT("Increase"));
@@ -1216,7 +1216,7 @@ class statistics_helper
                     break;
 
 
-                case Question::QT_SEMICOLON_ARRAY_TEXT: // Array (Multi Flexi) (Text)
+                case Question::QT_SEMICOLON_ARRAY_MULTI_FLEX_TEXT: //Array (Multi Flexi) (Text)
                     list($qacode, $licode) = explode("_", $qanswer);
 
                     $qresult = Question::model()->findAll(array('condition' => 'parent_qid=:parent_qid AND title=:title', 'params' => array(":parent_qid" => $qiqid, ':title' => $qanswer)));
@@ -1233,7 +1233,7 @@ class statistics_helper
                     $qtitle .= "($qanswer)" . "[" . $atext . "] [" . $ltext . "]";
                     break;
 
-                case Question::QT_COLON_ARRAY_NUMBERS: // Array (Multiple Flexi) (Numbers)
+                case Question::QT_COLON_ARRAY_MULTI_FLEX_NUMBERS: //Array (Multiple Flexi) (Numbers)
                     $aQuestionAttributes = QuestionAttribute::model()->getQuestionAttributes($qiqid);
                     if (trim($aQuestionAttributes['multiflexible_max']) != '') {
                         $maxvalue = $aQuestionAttributes['multiflexible_max'];
@@ -1268,8 +1268,8 @@ class statistics_helper
                     $qtitle .= "[$myans][$mylabel]";
                     break;
 
-                case Question::QT_F_ARRAY: // Array of Flexible
-                case Question::QT_H_ARRAY_COLUMN: // Array of Flexible by Column
+                case Question::QT_F_ARRAY_FLEXIBLE_ROW: //Array of Flexible
+                case Question::QT_H_ARRAY_FLEXIBLE_COLUMN: //Array of Flexible by Column
                     $qresult = Question::model()->findAll(array('order' => 'question_order', 'condition' => 'parent_qid=:parent_qid AND title=:title', 'params' => array(":parent_qid" => $qiqid, ':title' => $qanswer)));
                     //loop through answers
                     foreach ($qresult as $qrow) {
@@ -1291,7 +1291,7 @@ class statistics_helper
 
 
 
-                case Question::QT_G_GENDER: //Gender
+                case Question::QT_G_GENDER_DROPDOWN: //Gender
                     $alist[] = array("F", gT("Female"));
                     $alist[] = array("M", gT("Male"));
                     break;
@@ -1319,7 +1319,7 @@ class statistics_helper
                     break;
 
 
-                case Question::QT_1_ARRAY_DUAL:
+                case Question::QT_1_ARRAY_MULTISCALE:
                     $sSubquestionQuery = "SELECT  question FROM {{questions}} q JOIN {{question_l10ns}} l ON q.qid = l.qid  WHERE q.parent_qid='$qiqid' AND q.title='$qanswer' AND l.language='{$language}' ORDER BY q.question_order";
 
                     $questionDesc = Yii::app()->db->createCommand($sSubquestionQuery)->query()->read();
@@ -1454,6 +1454,7 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
 	return array("alist" => $alist, "qtitle" => $qtitle, "qquestion" => $qquestion, "qtype" => $qtype, "statisticsoutput" => $statisticsoutput, "parentqid" => (int)$qqid);
 	
 }
+	
     /**
      * @param string $outputType
      * @param integer $usegraph
@@ -1493,9 +1494,9 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
                         // just count the number of 'other' values - that way with failing Javascript the statistics don't get messed up
                         /* This query selects a count of responses where "other" has been selected */
                         foreach ($oResponses as $oResponse) {
-                            $otherValueColumn = $al[2];
-                            $answerOptionColumn = substr($otherValueColumn, 0, strlen($otherValueColumn) - 5);
-                            if (!empty($oResponse->$answerOptionColumn) && $oResponse->$answerOptionColumn == '-oth-') {
+                            $sResponseColumn = $al[2];
+                            $column = substr($sResponseColumn, 0, strlen($sResponseColumn) - 5);
+                            if ($column == '-oth-' && !empty($oResponse->$sResponseColumn)) {
                                 $row += 1;
                             }
                         }
@@ -1513,12 +1514,12 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
                 /*
                 * text questions:
                 *
-                * U = Huge free text
+                * U = huge free text
                 * T = long free text
-                * S = Short free text
-                * Q = Multiple short text
+                * S = short free text
+                * Q = multiple short text
                 */
-                elseif ($outputs['qtype'] == Question::QT_U_HUGE_FREE_TEXT || $outputs['qtype'] == Question::QT_T_LONG_FREE_TEXT || $outputs['qtype'] == Question::QT_S_SHORT_FREE_TEXT || $outputs['qtype'] == Question::QT_Q_MULTIPLE_SHORT_TEXT || $outputs['qtype'] == Question::QT_SEMICOLON_ARRAY_TEXT) {
+                elseif ($outputs['qtype'] == Question::QT_U_HUGE_FREE_TEXT || $outputs['qtype'] == Question::QT_T_LONG_FREE_TEXT || $outputs['qtype'] == Question::QT_S_SHORT_FREE_TEXT || $outputs['qtype'] == Question::QT_Q_MULTIPLE_SHORT_TEXT || $outputs['qtype'] == Question::QT_SEMICOLON_ARRAY_MULTI_FLEX_TEXT) {
                     $sDatabaseType = Yii::app()->db->getDriverName();
 
                     //free text answers
@@ -1630,10 +1631,10 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
             /*
             * text questions:
             *
-            * U = Huge free text
+            * U = huge free text
             * T = long free text
-            * S = Short free text
-            * Q = Multiple short text
+            * S = short free text
+            * Q = multiple short text
             */
             elseif ($outputs['qtype'] == Question::QT_S_SHORT_FREE_TEXT || $outputs['qtype'] == Question::QT_U_HUGE_FREE_TEXT || $outputs['qtype'] == Question::QT_T_LONG_FREE_TEXT || $outputs['qtype'] == Question::QT_Q_MULTIPLE_SHORT_TEXT) {
                 $headPDF = array();
@@ -1849,7 +1850,7 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
             //data available
             if (($gdata[$i] !== "N/A")) {
                 //check if data should be aggregated
-                if (Yii::app()->getConfig('showaggregateddata') == 1 && ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_POINT)) {
+                if (Yii::app()->getConfig('showaggregateddata') == 1 && ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_CHOICE_QUESTIONS)) {
                     //mark that we have done soemthing special here
                     $aggregated = true;
 
@@ -1949,7 +1950,7 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
             //it's only useful to calculate standard deviation and arithmetic means for question types
             //5 = 5 Point Scale
             //A = Array (5 Point Choice)
-            if ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_POINT) {
+            if ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_CHOICE_QUESTIONS) {
                 $stddev = 0;
                 $stddevarray = array_slice($grawdata, 0, 5, true);
                 $am = 0;
@@ -2036,7 +2037,7 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
         //PCHART has to be enabled and we need some data
         //
         if ($usegraph == 1) {
-            $bShowGraph = (isset($aattr["statistics_showgraph"]) && $aattr["statistics_showgraph"] == "1");
+            $bShowGraph = $aattr["statistics_showgraph"] == "1";
             $bAllowPieChart = ($outputs['qtype'] != Question::QT_M_MULTIPLE_CHOICE && $outputs['qtype'] != Question::QT_P_MULTIPLE_CHOICE_WITH_COMMENTS);
             $bAllowMap = (isset($aattr["location_mapservice"]) && $aattr["location_mapservice"] == "1");
             $bShowMap = ($bAllowMap && $aattr["statistics_showmap"] == "1");
@@ -2126,7 +2127,7 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
         //close table/output
         if ($outputType == 'html') {
             // show this block only when we show graphs and are not in the public statics controller
-            if ($usegraph == 1 && $bShowGraph && get_class(Yii::app()->getController()) !== 'StatisticsUserController') {
+            if ($usegraph == 1 && $bShowGraph && get_class(Yii::app()->getController()) !== 'Statistics_userController') {
                 $fullLabels = $labels;
                 // We clean the labels
                 $iMaxLabelLength = 0;
@@ -2208,6 +2209,9 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
 		
 		
 	}
+	
+	
+	
     /**
      * displayResults builds html output to display the actual results from a survey
      *
@@ -2313,9 +2317,9 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
                         // just count the number of 'other' values - that way with failing Javascript the statistics don't get messed up
                         /* This query selects a count of responses where "other" has been selected */
                         foreach ($oResponses as $oResponse) {
-                            $otherValueColumn = $al[2];
-                            $answerOptionColumn = substr($otherValueColumn, 0, strlen($otherValueColumn) - 5);
-                            if (!empty($oResponse->$answerOptionColumn) && $oResponse->$answerOptionColumn == '-oth-') {
+                            $sResponseColumn = $al[2];
+                            $column = substr($sResponseColumn, 0, strlen($sResponseColumn) - 5);
+                            if ($column == '-oth-' && !empty($oResponse->$sResponseColumn)) {
                                 $row += 1;
                             }
                         }
@@ -2333,12 +2337,12 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
                 /*
                 * text questions:
                 *
-                * U = Huge free text
+                * U = huge free text
                 * T = long free text
-                * S = Short free text
-                * Q = Multiple short text
+                * S = short free text
+                * Q = multiple short text
                 */
-                elseif ($outputs['qtype'] == Question::QT_U_HUGE_FREE_TEXT || $outputs['qtype'] == Question::QT_T_LONG_FREE_TEXT || $outputs['qtype'] == Question::QT_S_SHORT_FREE_TEXT || $outputs['qtype'] == Question::QT_Q_MULTIPLE_SHORT_TEXT || $outputs['qtype'] == Question::QT_SEMICOLON_ARRAY_TEXT) {
+                elseif ($outputs['qtype'] == Question::QT_U_HUGE_FREE_TEXT || $outputs['qtype'] == Question::QT_T_LONG_FREE_TEXT || $outputs['qtype'] == Question::QT_S_SHORT_FREE_TEXT || $outputs['qtype'] == Question::QT_Q_MULTIPLE_SHORT_TEXT || $outputs['qtype'] == Question::QT_SEMICOLON_ARRAY_MULTI_FLEX_TEXT) {
                     $sDatabaseType = Yii::app()->db->getDriverName();
 
                     //free text answers
@@ -2466,10 +2470,10 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
             /*
             * text questions:
             *
-            * U = Huge free text
+            * U = huge free text
             * T = long free text
-            * S = Short free text
-            * Q = Multiple short text
+            * S = short free text
+            * Q = multiple short text
             */
             elseif ($outputs['qtype'] == Question::QT_S_SHORT_FREE_TEXT || $outputs['qtype'] == Question::QT_U_HUGE_FREE_TEXT || $outputs['qtype'] == Question::QT_T_LONG_FREE_TEXT || $outputs['qtype'] == Question::QT_Q_MULTIPLE_SHORT_TEXT) {
                 $headPDF = array();
@@ -2507,7 +2511,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
             //check if aggregated results should be shown
             elseif (Yii::app()->getConfig('showaggregateddata') == 1) {
                 if (!isset($showheadline) || $showheadline != false) {
-                    if ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_POINT) {
+                    if ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_CHOICE_QUESTIONS) {
                         switch ($outputType) {
                             case 'xls':
                                 $this->xlsRow++;
@@ -2914,7 +2918,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
             //data available
             else {
                 //check if data should be aggregated
-                if (Yii::app()->getConfig('showaggregateddata') == 1 && ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_POINT)) {
+                if (Yii::app()->getConfig('showaggregateddata') == 1 && ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_CHOICE_QUESTIONS)) {
                     //mark that we have done soemthing special here
                     $aggregated = true;
 
@@ -3148,7 +3152,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
             //it's only useful to calculate standard deviation and arithmetic means for question types
             //5 = 5 Point Scale
             //A = Array (5 Point Choice)
-            if ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_POINT) {
+            if ($outputs['qtype'] == Question::QT_5_POINT_CHOICE || $outputs['qtype'] == Question::QT_A_ARRAY_5_CHOICE_QUESTIONS) {
                 $stddev = 0;
                 $stddevarray = array_slice($grawdata, 0, 5, true);
                 $am = 0;
@@ -3455,7 +3459,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
         //close table/output
         if ($outputType == 'html') {
             // show this block only when we show graphs and are not in the public statics controller
-            if ($usegraph == 1 && $bShowGraph && get_class(Yii::app()->getController()) !== 'StatisticsUserController') {
+            if ($usegraph == 1 && $bShowGraph && get_class(Yii::app()->getController()) !== 'Statistics_userController') {
                 // We clean the labels
                 $iMaxLabelLength = 0;
 
@@ -3609,7 +3613,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
 		$aStatisticsData = array();
         foreach ($runthrough as $rt) {
 			$rcount = $rcount + 1;  
-				if($rcount <= 13){
+				if($rcount <= 12){
 			$aquery .= "AVG(".$rt.")". " G".$rcount.",";
 				}
 				else{
@@ -3624,11 +3628,11 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
 			$results1 = Yii::app()->db->createCommand($fquery)->queryAll();
 			
 			
-		$allLables = array("Goals,Objectives and Resources","Corporate Alignment","Community and Ecosystem Management","Opeartions","Culture","Lifecycle Management","Risk Management","Compliance and Assurance Management","Security Management","Consumption","Contribution","Publication","Inner Source","Strategy","Management","Usage");
+		$allLables = array("Goals and Objectives","Corporate Alignment","Community and Ecosystem Engagement","InnerSource","Lifecycle Management","Risk Management","Compliance and Assurance Management","Security Management","Operations Management","Consumption","Contribution","Publication","Strategy","Management","Usage");
 
-		$alist = array(array_slice($allLables,0,5), array_slice($allLables,5,4), array_slice($allLables,9,4),array_slice($allLables,13,3));
+		$alist = array(array_slice($allLables,0,4), array_slice($allLables,4,5), array_slice($allLables,9,3),array_slice($allLables,12,3));
 		
-		$arrayData = array(array_slice($results1[0],0,5), array_slice($results1[0],5,4), array_slice($results1[0],9,4),array_slice($results1[0],13,3));
+		$arrayData = array(array_slice($results1[0],0,4), array_slice($results1[0],4,5), array_slice($results1[0],9,3),array_slice($results1[0],12,3));
 		// echo "<pre>";
 		// print_r($alist);
 		// print_r($arrayData);
@@ -3649,6 +3653,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
 			unset($outputs);
             unset($display);
 		}
+
         $sOutputHTML .= '</div>';
 
         $sGoogleMapsAPIKey = trim(Yii::app()->getConfig("googleMapsAPIKey"));
@@ -3707,7 +3712,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
                 if ($field['type'] == Question::QT_P_MULTIPLE_CHOICE_WITH_COMMENTS) {
                     $myField = "P" . $myField;
                 }
-                //Numerical input will get special treatment (arihtmetic mean, standard derivation, ...)
+                //numerical input will get special treatment (arihtmetic mean, standard derivation, ...)
                 if ($field['type'] == Question::QT_N_NUMERICAL) {
                     $myField = "N" . $myField;
                 }
@@ -3726,7 +3731,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
                     $myField = "D" . $myField;
                 }
 
-                if ($field['type'] == Question::QT_F_ARRAY || $field['type'] == "Question::QT_H_ARRAY_COLUMN") {
+                if ($field['type'] == Question::QT_F_ARRAY_FLEXIBLE_ROW || $field['type'] == "Question::QT_H_ARRAY_FLEXIBLE_COLUMN") {
                     //Get answers. We always use the answer code because the label might be too long elsewise
                     $query = "SELECT code, answer FROM {{answers}} a JOIN {{answer_l10ns}} l ON a.aid = l.aid  WHERE a.qid='" . $field['qid'] . "' AND a.scale_id=0 AND l.language='{$language}' ORDER BY a.sortorder, l.answer";
                     $result = Yii::app()->db->createCommand($query)->query();
@@ -3935,11 +3940,11 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
                 $myField = $surveyid . "X" . $field['gid'] . "X" . $field['qid'];
 
                 // Multiple choice get special treatment
-                //Numerical input will get special treatment (arihtmetic mean, standard derivation, ...)
+                //numerical input will get special treatment (arihtmetic mean, standard derivation, ...)
                 // textfields get special treatment
                 //statistics for Date questions are not implemented yet.
                 // See buildOutputList for special treatment
-                $specialQuestionTypes = array(Question::QT_M_MULTIPLE_CHOICE, Question::QT_P_MULTIPLE_CHOICE_WITH_COMMENTS, Question::QT_T_LONG_FREE_TEXT, Question::QT_S_SHORT_FREE_TEXT, Question::QT_Q_MULTIPLE_SHORT_TEXT, Question::QT_R_RANKING, Question::QT_VERTICAL_FILE_UPLOAD, "", Question::QT_N_NUMERICAL, Question::QT_K_MULTIPLE_NUMERICAL, Question::QT_D_DATE);
+                $specialQuestionTypes = array(Question::QT_M_MULTIPLE_CHOICE, Question::QT_P_MULTIPLE_CHOICE_WITH_COMMENTS, Question::QT_T_LONG_FREE_TEXT, Question::QT_S_SHORT_FREE_TEXT, Question::QT_Q_MULTIPLE_SHORT_TEXT, Question::QT_R_RANKING_STYLE, Question::QT_VERTICAL_FILE_UPLOAD, "", Question::QT_N_NUMERICAL, Question::QT_K_MULTIPLE_NUMERICAL_QUESTION, Question::QT_D_DATE);
                 if (in_array($field['type'], $specialQuestionTypes)) {
                     $myField = $field['type'] . $myField;
                 }
@@ -4131,8 +4136,8 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
         //only continue if we have something to output
         if ($results > 0) {
             if ($outputType == 'html' && $browse === true && Permission::model()->hasSurveyPermission($surveyid, 'responses', 'read')) {
-                // add a buttons to browse results
-                $sOutputHTML .= CHtml::form(["responses/browse/", 'surveyId' => $surveyid], 'post', array('target' => '_blank')) . "\n"
+                //add a buttons to browse results
+                $sOutputHTML .= CHtml::form(["responses/browse/", ['surveyId' => $surveyid]], 'post', array('target' => '_blank')) . "\n"
                 . "\t\t<p>"
                 . "\t\t\t<input type='submit' class='btn btn-default' value='" . gT("Browse") . "'  />\n"
                 . "\t\t\t<input type='hidden' name='sid' value='$surveyid' />\n"

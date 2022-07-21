@@ -31,14 +31,15 @@ class PrintanswersController extends LSYii_Controller
     /* @var array Global data when use templatereplace function  in layout, @see templatereplace $redata */
     public $aGlobalData = array();
 
-    /**
-     * printanswers::view()
-     * View answers at the end of a survey in one place. To export as pdf, set 'usepdfexport' = 1 in lsconfig.php and $printableexport='pdf'.
-     * @param mixed $surveyid
-     * @param bool $printableexport
-     * @return
-     */
-    public function actionView($surveyid, $printableexport = false)
+
+        /**
+         * printanswers::view()
+         * View answers at the end of a survey in one place. To export as pdf, set 'usepdfexport' = 1 in lsconfig.php and $printableexport='pdf'.
+         * @param mixed $surveyid
+         * @param bool $printableexport
+         * @return
+         */
+    function actionView($surveyid, $printableexport = false)
     {
         Yii::app()->loadHelper("frontend");
         Yii::import('application.libraries.admin.pdf');
@@ -125,11 +126,11 @@ class PrintanswersController extends LSYii_Controller
 		$resparray = array_slice($groupArray,0,1);
 		$finalarray = array_slice($resparray[0],6,1);
 		
-		$allLables = array("Goals,Objectives and Resources","Corporate Alignment","Community and Ecosystem Engagement","Operations","Culture","Lifecycle Management","Risk Management","Compliance and Assurance Management","Security Management","Consumption","Contribution","Publication","InnerSource","Strategy","Management","Usage");
+		$allLables = array("Goals and Objectives", "Corporate Alignment","Community and Ecosystem Engagement","InnerSource","Lifecycle Management","Risk Management","Compliance and Assurance Management","Security Management","Operations Management","Consumption","Contribution","Publication","Strategy","Management","Usage");
 
-		$alist = array(array_slice($allLables,0,5), array_slice($allLables,5,4), array_slice($allLables,9,4),array_slice($allLables,13,3));
+		$alist = array(array_slice($allLables,0,4), array_slice($allLables,4,5), array_slice($allLables,9,3),array_slice($allLables,12,3));
 		
-		$arrayData = array(array_slice($finalarray['debug'],129,5), array_slice($finalarray['debug'],134,4), array_slice($finalarray['debug'],138,4),array_slice($finalarray['debug'],142,3));
+		$arrayData = array(array_slice($finalarray['debug'],337,4), array_slice($finalarray['debug'],341,5), array_slice($finalarray['debug'],346,3),array_slice($finalarray['debug'],349,3));
 					
 			 // echo "<pre>";
 			 // print_r($arrayData);
@@ -197,9 +198,9 @@ class PrintanswersController extends LSYii_Controller
 		//	
 		 
 		 $sOutputHTML .= '<div class="row"><table cellspacing="3" border="5"; style="width:100%; "background-color:#00FBD0"><thead><tr><th><h1>Open Source Maturity Model</h1></th></tr></thead>';
-		 $alistBar = array(array_slice($allLables,0,5), array_slice($allLables,5,4), array_slice($allLables,9,4));
+		 $alistBar = array(array_slice($allLables,0,4), array_slice($allLables,4,5), array_slice($allLables,9,3));
 		
-		 $arrayDataBar = array(array_slice($finalarray['debug'],129,5), array_slice($finalarray['debug'],134,4), array_slice($finalarray['debug'],138,4));
+		 $arrayDataBar = array(array_slice($finalarray['debug'],337,4), array_slice($finalarray['debug'],341,5), array_slice($finalarray['debug'],346,3));
 		 
 		 //$colorarray = array("'#D9B8EA'","'#FEE3A1'","'#E1F5FF'");
 		 
@@ -231,8 +232,7 @@ class PrintanswersController extends LSYii_Controller
         $aData['expertstats'] = true;
 		$aData['chartJS'] = App()->getConfig('adminscripts').'Chart.min.js';
 		$aData['chartApexJS'] = App()->getConfig('adminscripts').'/dist/apexcharts.min.js';
-//OSMM Customization Ends						  
-
+//OSMM Customization Ends
         // Remove all <script>...</script> content from result.
         Yii::import('application.helpers.viewHelper');
         foreach ($groupArray as &$group) {
@@ -402,5 +402,6 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
 		return array("statisticsoutput" => $statisticsoutput, "astatdata" => $astatdata);
 		
 		
-	}		
+	}	
+	
 }
