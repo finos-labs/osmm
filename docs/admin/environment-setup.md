@@ -33,7 +33,7 @@ Next step is to import the [LSS](data/osmm-survey-structure.lss) file:
 5. Remove current LS folder with `rm -rf stack/limesurvey`
 6. Copy the new version over, with `mv ~/limesurvey ~/stack`
 7. Run the OSMM deployment using `cd osmm ; ./osmm-deploy.sh`
-8. Cleanup downloads using `rm -rf ~/*.zip`
+8. Make sure that `/opt/bitnami` is writeable by the `bitnami` user - `sudo chown bitnami:bitnami /opt/bitnami`
 9. Setup config, data and permissions from previous install
 ```
 sudo rm -rf ~/stack/limesurvey/tmp/ ~/stack/limesurvey/upload/ ~/stack/limesurvey/application/config/
@@ -42,5 +42,6 @@ cp -Rf ~/backups/limesurvey-2022-07-25/upload/ ~/stack/limesurvey/
 cp -Rf ~/backups/limesurvey-2022-07-25/application/config/config.php ~/stack/limesurvey/application/config
 sudo chmod -R 777 ~/stack/limesurvey/tmp/
 ```
+10. Cleanup downloads using `rm -rf ~/*.zip`
 
-Make sure that `/opt/bitnami` is writeable by the `bitnami` user - `sudo chown bitnami:bitnami /opt/bitnami`.
+You can now access the LS instance on `https://<URL>/admin`, login and make sure that everything is in place.
