@@ -31,15 +31,14 @@ class PrintanswersController extends LSYii_Controller
     /* @var array Global data when use templatereplace function  in layout, @see templatereplace $redata */
     public $aGlobalData = array();
 
-
-        /**
-         * printanswers::view()
-         * View answers at the end of a survey in one place. To export as pdf, set 'usepdfexport' = 1 in lsconfig.php and $printableexport='pdf'.
-         * @param mixed $surveyid
-         * @param bool $printableexport
-         * @return
-         */
-    function actionView($surveyid, $printableexport = false)
+    /**
+     * printanswers::view()
+     * View answers at the end of a survey in one place. To export as pdf, set 'usepdfexport' = 1 in lsconfig.php and $printableexport='pdf'.
+     * @param mixed $surveyid
+     * @param bool $printableexport
+     * @return
+     */
+    public function actionView($surveyid, $printableexport = false)
     {
         Yii::app()->loadHelper("frontend");
         Yii::import('application.libraries.admin.pdf');
@@ -232,7 +231,7 @@ class PrintanswersController extends LSYii_Controller
         $aData['expertstats'] = true;
 		$aData['chartJS'] = App()->getConfig('adminscripts').'Chart.min.js';
 		$aData['chartApexJS'] = App()->getConfig('adminscripts').'/dist/apexcharts.min.js';
-//OSMM Customization Ends
+//OSMM Customization  Ends													
         // Remove all <script>...</script> content from result.
         Yii::import('application.helpers.viewHelper');
         foreach ($groupArray as &$group) {
@@ -313,8 +312,7 @@ class PrintanswersController extends LSYii_Controller
             $quexmlpdf->Output($sExportFileName . "-" . $iSurveyID . "-queXML.pdf", 'D');
         }
     }
-	
-protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $outputType, $sql, $oLanguage, $browse = true){
+ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $outputType, $sql, $oLanguage, $browse = true){
 		$alist = array();
 		
 		switch($rt){

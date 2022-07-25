@@ -689,7 +689,7 @@ class Statistics extends SurveyCommonAction
         // The questions to display (all question)
         foreach ($rows as $row) {
             $type = $row['type'];
-		if(incompleteAnsFilterState()!="aggregate"){												 
+		if(incompleteAnsFilterState()!="aggregate"){							  
             switch ($type) {
                 // Double scale cases
                 case Question::QT_COLON_ARRAY_NUMBERS:
@@ -777,7 +777,7 @@ class Statistics extends SurveyCommonAction
 			
 
 		}
-	}
+	}	  
         // ----------------------------------- END FILTER FORM ---------------------------------------
 
         Yii::app()->loadHelper('admin/statistics');
