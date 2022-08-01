@@ -177,7 +177,7 @@ class PrintanswersController extends LSYii_Controller
 		}
 		$colorarray = [];
 		$path = dirname(__FILE__);
-		$path .= "\colorcodes.csv";
+		$path .= "/colorcodes.csv";
 		//echo $path;
 		
 		$handle = fopen($path, 'r');
