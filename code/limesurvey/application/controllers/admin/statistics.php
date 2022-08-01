@@ -228,7 +228,11 @@ class Statistics extends SurveyCommonAction
             $selecthide = "";
             $selectshow = "";
             $selectinc = "selected='selected'";
-        } else {
+        } elseif (incompleteAnsFilterState() == "aggregate") {
+            $selecthide = "";
+            $selectshow ="selected='selected'" ;
+            $selectinc ="" ;
+        }else {
             $selecthide = "";
             $selectshow = "selected='selected'";
             $selectinc = "";
