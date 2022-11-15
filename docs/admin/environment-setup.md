@@ -26,9 +26,9 @@ Next step is to import the [LSS](data/osmm-survey-structure.lss) file:
 9. Click on `Run Survey` - you can share this URL with any other stakeholder
 
 ## Upgrading LimeSurvey to the latest version
-1. Visit https://community.limesurvey.org/downloads/ and copy the link address of the (first) `Download` button for the latest CE version; don't use the LTS version, choose the first `Download` button.
-2. Perform a backup of the `stack/limesurvey` folder as described in the previous section
-3. From the EC2 box, run `curl -O <copied URL>` in the root folder
+1. Visit https://community.limesurvey.org/downloads/ and copy the link address of the (first) `Download` button for the latest CE version; don't use the LTS version, choose the first `Download` button. Example:
+2. Perform a backup of the `stack/limesurvey` folder as described in the previous section, with "cp -rf stack/limesurvey/ backups/limesurvey-\`date +'%Y-%m-%d'\`"
+3. From the EC2 box, run `curl -O <copied URL>` in the root folder, ie `curl -O https://download.limesurvey.org/latest-stable-release/limesurvey5.4.11+221114.zip`
 4. Unzip the archive with `unzip limesurvey<version>.zip`
 5. Remove current LS folder with `rm -rf stack/limesurvey`
 6. Copy the new version over, with `mv ~/limesurvey ~/stack`
@@ -36,12 +36,15 @@ Next step is to import the [LSS](data/osmm-survey-structure.lss) file:
 8. Make sure that `/opt/bitnami` is writeable by the `bitnami` user - `sudo chown bitnami:bitnami /opt/bitnami`
 9. Setup config, data and permissions from previous install
 ```
-sudo rm -rf ~/stack/limesurvey/tmp/ ~/stack/limesurvey/upload/ ~/stack/limesurvey/application/config/
-cp -Rf ~/backups/limesurvey-2022-07-25/tmp/ ~/stack/limesurvey/
-cp -Rf ~/backups/limesurvey-2022-07-25/upload/ ~/stack/limesurvey/
-cp -Rf ~/backups/limesurvey-2022-07-25/application/config/config.php ~/stack/limesurvey/application/config
+sudo rm -rf ~/stack/limesurvey/tmp/ ~/stack/limesurvey/upload/
+cd ~/backups/limesurvey-2022-11-15
+cp -Rf ./tmp/ ~/stack/limesurvey/
+cp -Rf ./upload/ ~/stack/limesurvey/
+cp -Rf ./application/config/config.php ~/stack/limesurvey/application/config
 sudo chmod -R 777 ~/stack/limesurvey/tmp/
 ```
 10. Cleanup downloads using `rm -rf ~/*.zip`
 
 You can now access the LS instance on `https://<URL>/admin`, login and make sure that everything is in place.
+
+To debug errors, try to `cat ~/stack/apache2/logs/error_log`.
