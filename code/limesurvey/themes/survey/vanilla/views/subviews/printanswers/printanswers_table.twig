@@ -5,6 +5,7 @@
             <h2>{{ gT("Survey name (ID):") }} {{aSurveyInfo.surveyls_title}} ({{aSurveyInfo.sid}})</h2>
         </div>
     </div>
+    </div>
 	<script type="text/javascript" src="{{chartJS}}"></script>
 	<script type="text/javascript" src="{{chartApexJS}}"></script>
 	<div class="container public-stats">
@@ -35,9 +36,9 @@
             <!--<div class="container-fluid col-xs-11 col-md-10 col-xs-offset-1 col-md-offset-2">-->
                 {# % for questionId,question in group.answerArray % #}
                 {# % set questionTemplate = './subviews/printanswers/question_types/template_' ~ question.questionclass ~ '.twig' % #}
-                {#{ include(questionTemplate) }#}
+                {#{ include(questionTemplate) } #}
                 {# % endfor % #} 
-            <!--</div>-->
+            </div>
         </div>
     </groupsection> 
 {% endfor %}

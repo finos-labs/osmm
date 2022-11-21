@@ -30,7 +30,6 @@
                                 "all"=>gT("All responses",'unescaped'),
                                 "complete"=>gT("Complete only",'unescaped'),
                                 "incomplete"=>gT("Incomplete only",'unescaped'),"aggregate"=>gT("Aggregate only",'unescaped'),
-								
                             ),
                             array(
                                 'class'=>'form-control',

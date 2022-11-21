@@ -38,9 +38,9 @@
     {% if (aSurveyInfo.printPdf != 1) %} 
         <div class="row">
             <div class="col-sm-6">
-                {#{ C.Html.form(aSurveyInfo.printAnswersHeadFormUrl, 'post') }#}
-                    {#{ gT("Export these responses as PDF:") }#} <!--<button class="btn btn-default" type="submit">-->{#{ gT("PDF export") }#}<!--</button>-->
-                {#{ C.Html.endForm }#}
+                {{ C.Html.form(aSurveyInfo.printAnswersHeadFormUrl, 'post') }}
+                    {{ gT("Export these responses as PDF:") }} <!--<button class="btn btn-default" type="submit">-->{{ gT("PDF export") }}<!--</button>-->
+                {{ C.Html.endForm }}
             </div>
             <div class="col-sm-6">
                 {{ C.Html.form(aSurveyInfo.printAnswersHeadFormQueXMLUrl, 'post') }}
