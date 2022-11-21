@@ -231,7 +231,7 @@ class PrintanswersController extends LSYii_Controller
         $aData['expertstats'] = true;
 		$aData['chartJS'] = App()->getConfig('adminscripts').'Chart.min.js';
 		$aData['chartApexJS'] = App()->getConfig('adminscripts').'/dist/apexcharts.min.js';
-//OSMM Customization  Ends													
+//OSMM Customization  Ends							  
         // Remove all <script>...</script> content from result.
         Yii::import('application.helpers.viewHelper');
         foreach ($groupArray as &$group) {
@@ -400,6 +400,5 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
 		return array("statisticsoutput" => $statisticsoutput, "astatdata" => $astatdata);
 		
 		
-	}	
-	
+	}										 
 }

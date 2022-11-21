@@ -228,11 +228,11 @@ class Statistics extends SurveyCommonAction
             $selecthide = "";
             $selectshow = "";
             $selectinc = "selected='selected'";
-        } elseif (incompleteAnsFilterState() == "aggregate") {
+		} elseif (incompleteAnsFilterState() == "aggregate") {
             $selecthide = "";
             $selectshow ="selected='selected'" ;
-            $selectinc ="" ;
-        }else {
+            $selectinc ="" ;													  
+        } else {
             $selecthide = "";
             $selectshow = "selected='selected'";
             $selectinc = "";
@@ -693,7 +693,7 @@ class Statistics extends SurveyCommonAction
         // The questions to display (all question)
         foreach ($rows as $row) {
             $type = $row['type'];
-		if(incompleteAnsFilterState()!="aggregate"){							  
+		if(incompleteAnsFilterState()!="aggregate"){																  
             switch ($type) {
                 // Double scale cases
                 case Question::QT_COLON_ARRAY_NUMBERS:
@@ -762,6 +762,7 @@ class Statistics extends SurveyCommonAction
                 case Question::QT_U_HUGE_FREE_TEXT: // Huge free text
                 case Question::QT_Q_MULTIPLE_SHORT_TEXT:
                 case Question::QT_SEMICOLON_ARRAY_TEXT:
+                case Question::QT_X_TEXT_DISPLAY:
                     break;
 
 
@@ -781,7 +782,8 @@ class Statistics extends SurveyCommonAction
 			
 
 		}
-	}	  
+	}	  											 
+
         // ----------------------------------- END FILTER FORM ---------------------------------------
 
         Yii::app()->loadHelper('admin/statistics');

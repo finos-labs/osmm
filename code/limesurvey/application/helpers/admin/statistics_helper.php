@@ -320,6 +320,7 @@ function buildSelects($allfields, $surveyid, $language)
     $selects = array();
     $aQuestionMap = array();
     $survey = Survey::model()->findByPk($surveyid);
+    $formatdata = getDateFormatData(Yii::app()->session['dateformat']);
 
     $fieldmap = createFieldMap($survey, "full", false, false, $language);
     foreach ($fieldmap as $field) {
@@ -333,6 +334,8 @@ function buildSelects($allfields, $surveyid, $language)
     for (reset($_POST); $key = key($_POST); next($_POST)) {
         $postvars[] = $key;
     }
+
+    $responseModel = SurveyDynamic::model($surveyid);
 
     /*
     * Iterate through postvars to create "nice" data for SQL later.
@@ -378,8 +381,9 @@ function buildSelects($allfields, $surveyid, $language)
                 //put together some SQL here
                 $thisquestion = Yii::app()->db->quoteColumnName($pv) . " IN (";
 
+                $db = Yii::app()->db;
                 foreach ($_POST[$pv] as $condition) {
-                    $thisquestion .= "'$condition', ";
+                    $thisquestion .=  Yii::app()->db->quoteValue(getEncryptedCondition($responseModel, $pv, $condition)) . ", ";
                 }
 
                 $thisquestion = substr($thisquestion, 0, -2)
@@ -400,7 +404,8 @@ function buildSelects($allfields, $surveyid, $language)
                 foreach ($aresult as $arow) {
                     // only add condition if answer has been chosen
                     if (in_array($arow['title'], $_POST[$pv])) {
-                        $mselects[] = Yii::app()->db->quoteColumnName(substr($pv, 1, strlen($pv)) . $arow['title']) . " = 'Y'";
+                        $fieldname = substr($pv, 1, strlen($pv)) . $arow['title'];
+                        $mselects[] = Yii::app()->db->quoteColumnName($fieldname) . " = " . Yii::app()->db->quoteValue(getEncryptedCondition($responseModel, $fieldname, 'Y'));
                     }
                 }
                 /* If there are mutliple conditions generated from this multiple choice question, join them using the boolean "OR" */
@@ -466,18 +471,22 @@ function buildSelects($allfields, $surveyid, $language)
 
                 //D - Date
             elseif ($firstletter == "D" && $_POST[$pv] != "") {
+                $datetimeobj = new Date_Time_Converter($_POST[$pv], $formatdata['phpdate'] . ' H:i');
                 //Date equals
                 if (substr($pv, -2) == "eq") {
-                    $selects[] = Yii::app()->db->quoteColumnName(substr($pv, 1, strlen($pv) - 3)) . " = " . App()->db->quoteValue($_POST[$pv]);
+                    $dateValue = $datetimeobj->convert("Y-m-d");
+                    $columnName = Yii::app()->db->quoteColumnName(substr($pv, 1, strlen($pv) - 3));
+                    $selects[] = $columnName . " >= " . Yii::app()->db->quoteValue($dateValue . " 00:00:00") . " and " . $columnName . " <= " . Yii::app()->db->quoteValue($dateValue . " 23:59:59");
                 } else {
+                    $dateValue = $datetimeobj->convert("Y-m-d H:i");
                     //date less than
                     if (substr($pv, -4) == "more") {
-                        $selects[] = Yii::app()->db->quoteColumnName(substr($pv, 1, strlen($pv) - 5)) . " >= " . App()->db->quoteValue($_POST[$pv]);
+                        $selects[] = Yii::app()->db->quoteColumnName(substr($pv, 1, strlen($pv) - 5))." >= ".App()->db->quoteValue($dateValue);
                     }
 
                     //date greater than
                     if (substr($pv, -4) == "less") {
-                        $selects[] = Yii::app()->db->quoteColumnName(substr($pv, 1, strlen($pv) - 5)) . " <= " . App()->db->quoteValue($_POST[$pv]);
+                        $selects[] = Yii::app()->db->quoteColumnName(substr($pv, 1, strlen($pv) - 5))." <= ".App()->db->quoteValue($dateValue);
                     }
                 }
             }
@@ -485,7 +494,6 @@ function buildSelects($allfields, $surveyid, $language)
                 //check for datestamp of given answer
             elseif (substr($pv, 0, 9) == "datestamp") {
                 //timestamp equals
-                $formatdata = getDateFormatData(Yii::app()->session['dateformat']);
                 if (substr($pv, -1, 1) == "E" && !empty($_POST[$pv])) {
                     $datetimeobj = new Date_Time_Converter($_POST[$pv], $formatdata['phpdate'] . ' H:i');
                     $sDateValue = $datetimeobj->convert("Y-m-d");
@@ -526,6 +534,13 @@ function square($number)
         $squarenumber = $number * $number;
     }
     return $squarenumber;
+}
+
+function getEncryptedCondition($responseModel, $attribute, $value)
+{
+    $attributes = [$attribute => $value];
+    $attributes = $responseModel->encryptAttributeValues($attributes);
+    return $attributes[$attribute] ?? $value;
 }
 
 class statistics_helper
@@ -578,12 +593,16 @@ class statistics_helper
      */
     protected function buildOutputList($rt, $language, $surveyid, $outputType, $sql, $oLanguage, $browse = true)
     {
+        $language = sanitize_languagecode($language);
+        $surveyid = (int) $surveyid;
+
         //Set up required variables
         $survey = Survey::model()->findByPk($surveyid);
         $alist = array();
         $qtitle = "";
         $qquestion = "";
         $qtype = "";
+        $subquestionText = "";
         $sQuestionType = substr($rt, 0, 1);
         $fieldmap = createFieldMap($survey, "full", false, false, $language);
         $sDatabaseType = Yii::app()->db->getDriverName();
@@ -700,6 +719,8 @@ class statistics_helper
             $lengthofnumeral = substr($rt, strpos($rt, "-") + 1, 1);
             list($qsid, $qgid, $qqid) = explode("X", substr($rt, 1, strpos($rt, "-") - ($lengthofnumeral + 1)), 3);
 
+            $qqid = (int) $qqid;
+
             //get question data
             $nquery = "SELECT title, type, question FROM {{questions}} q JOIN {{question_l10ns}} l ON q.qid = l.qid WHERE q.parent_qid=0 AND q.qid='$qqid' AND l.language='{$language}'";
             $nresult = Yii::app()->db->createCommand($nquery)->query();
@@ -761,8 +782,7 @@ class statistics_helper
                 $showem[] = array(gT("Average no. of files per respondent"), $row['avg']);
             }
 
-
-            $query = "SELECT " . $fieldname . " as json FROM {{survey_$surveyid}}";
+            $query = "SELECT " . Yii::app()->db->quoteColumnName($fieldname) . " as json FROM {{survey_$surveyid}}";
             $rows = Yii::app()->db->createCommand($query)->query();
 
             $responsecount = 0;
@@ -1162,9 +1182,8 @@ class statistics_helper
                     //list IDs and answer codes in brackets
                     $qquestion .= $linefeed;
                     $qtitle .= "($qanswer)" . "[" . $atext . "]";
+                    $subquestionText = $atext;
                     break;
-
-
 
                     // Array of 10 point choices
                     //same as above just with 10 items
@@ -1179,6 +1198,7 @@ class statistics_helper
 
                     $qquestion .= $linefeed;
                     $qtitle .= "({$qanswer})" . "[" . $atext . "]";
+                    $subquestionText = $atext;
                     break;
 
 
@@ -1197,6 +1217,7 @@ class statistics_helper
                     //output
                     $qquestion .= $linefeed;
                     $qtitle .= "({$qanswer})" . "[" . $atext . "]";
+                    $subquestionText = $atext;
                     break;
 
 
@@ -1213,6 +1234,7 @@ class statistics_helper
                     }
                     $qquestion .= $linefeed;
                     $qtitle .= "({$qanswer})" . "[" . $atext . "]";
+                    $subquestionText = $atext;
                     break;
 
 
@@ -1231,6 +1253,7 @@ class statistics_helper
 
                     $qquestion .= $linefeed;
                     $qtitle .= "($qanswer)" . "[" . $atext . "] [" . $ltext . "]";
+                    $subquestionText = $atext;
                     break;
 
                 case Question::QT_COLON_ARRAY_NUMBERS: // Array (Multiple Flexi) (Numbers)
@@ -1287,6 +1310,7 @@ class statistics_helper
                     //output
                     $qquestion .= $linefeed;
                     $qtitle .= "($qanswer)" . "[" . $atext . "]";
+                    $subquestionText = $atext;
                     break;
 
 
@@ -1320,7 +1344,9 @@ class statistics_helper
 
 
                 case Question::QT_1_ARRAY_DUAL:
-                    $sSubquestionQuery = "SELECT  question FROM {{questions}} q JOIN {{question_l10ns}} l ON q.qid = l.qid  WHERE q.parent_qid='$qiqid' AND q.title='$qanswer' AND l.language='{$language}' ORDER BY q.question_order";
+                    $qiqid = (int) $qiqid;
+                    $qanswerquoted = Yii::app()->db->quoteValue($qanswer);
+                    $sSubquestionQuery = "SELECT  question FROM {{questions}} q JOIN {{question_l10ns}} l ON q.qid = l.qid  WHERE q.parent_qid='$qiqid' AND q.title=$qanswerquoted AND l.language='{$language}' ORDER BY q.question_order";
 
                     $questionDesc = Yii::app()->db->createCommand($sSubquestionQuery)->query()->read();
                     $sSubquestion = flattenText($questionDesc['question']);
@@ -1380,6 +1406,7 @@ class statistics_helper
                     //adapt title and question
                     $qtitle = $qtitle . " [" . $sSubquestion . "][" . $labelno . "]";
                     $qquestion = $qastring . $labelheader;
+                    $subquestionText = $sSubquestion;
                     break;
 
 
@@ -1409,7 +1436,15 @@ class statistics_helper
             $alist[] = array("", gT("No answer"), false, 'is_no_answer');
         }
 
-        return array("alist" => $alist, "qtitle" => $qtitle, "qquestion" => $qquestion, "qtype" => $qtype, "statisticsoutput" => $statisticsoutput, "parentqid" => (int)$qqid);
+        return [
+            "alist" => $alist,
+            "qtitle" => $qtitle,
+            "qquestion" => $qquestion,
+            "qtype" => $qtype,
+            "statisticsoutput" => $statisticsoutput,
+            "parentqid" => (int)$qqid,
+            "subquestionText" => $subquestionText,
+        ];
     }
 
 protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $outputType, $sql, $oLanguage, $browse = true){
@@ -1453,8 +1488,7 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
 		
 	return array("alist" => $alist, "qtitle" => $qtitle, "qquestion" => $qquestion, "qtype" => $qtype, "statisticsoutput" => $statisticsoutput, "parentqid" => (int)$qqid);
 	
-}
-
+}																														
     /**
      * @param string $outputType
      * @param integer $usegraph
@@ -1826,7 +1860,7 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
 
 
             /*
-            * there are 3 colums:
+            * there are 3 columns:
             *
             * 1 (50%) = answer (title and code in brackets)
             * 2 (25%) = count (absolute)
@@ -2160,7 +2194,7 @@ protected function buildAggrOutputList($rt, $language,$alist, $surveyid, $output
 
         return array("statisticsoutput" => $statisticsoutput, "pdf" => $this->pdf, "astatdata" => $astatdata);
     }
-protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $outputType='html', $surveyid, $usegraph=1,$cnt)
+																				protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $outputType='html', $surveyid, $usegraph=1,$cnt)
     {
 		
 		$COLORS_FOR_SURVEY = array('20,130,200', '232,95,51', '34,205,33', '210,211,28', '134,179,129', '201,171,131', '251,231,221', '23,169,161', '167,187,213', '211,151,213', '147,145,246', '147,39,90', '250,250,201', '201,250,250', '94,0,94', '250,125,127', '0,96,201', '201,202,250', '0,0,127', '250,0,250', '250,250,0', '0,250,250', '127,0,127', '127,0,0', '0,125,127', '0,0,250', '0,202,250', '201,250,250', '201,250,201', '250,250,151', '151,202,250', '251,149,201', '201,149,250', '250,202,151', '45,96,250', '45,202,201', '151,202,0', '250,202,0', '250,149,0', '250,96,0', '184,230,115', '102,128,64', '220,230,207', '134,191,48', '184,92,161', '128,64,112', '230,207,224', '191,48,155', '230,138,115', '128,77,64', '230,211,207', '191,77,48', '80,161,126', '64,128,100', '207,230,220', '48,191,130', '25,25,179', '18,18,125', '200,200,255', '145,145,255', '255,178,0', '179,125,0', '255,236,191', '255,217,128', '255,255,0', '179,179,0', '255,255,191', '255,255,128', '102,0,153', '71,0,107', '234,191,255', '213,128,255');
@@ -2206,8 +2240,8 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
             $statisticsoutput .= "</div><br>\n";
         }
 		return array("statisticsoutput" => $statisticsoutput, "pdf" => $this->pdf, "astatdata" => $astatdata);
-	}
-		
+	}											  
+
     /**
      * displayResults builds html output to display the actual results from a survey
      *
@@ -2862,7 +2896,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
 
 
             /*
-            * there are 3 colums:
+            * there are 3 columns:
             *
             * 1 (50%) = answer (title and code in brackets)
             * 2 (25%) = count (absolute)
@@ -3597,7 +3631,7 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
             unset($outputs);
             unset($display);
         }
-	}else{
+}else{
         $rcount = 0;
 		$dcount = 0;
 		$aquery = "";
@@ -3667,6 +3701,11 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
      */
     public function generate_html_chartjs_statistics($surveyid, $allfields, $q2show = 'all', $usegraph = 0, $outputType = 'pdf', $pdfOutput = 'I', $sLanguageCode = null, $browse = true)
     {
+        if (!isset($surveyid)) {
+            $surveyid = (int) returnGlobal('sid');
+        } else {
+            $surveyid = (int) $surveyid;
+        }
 
         $aStatisticsData = array();
         $survey = Survey::model()->findByPk($surveyid);
@@ -3682,13 +3721,9 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
             $sLanguageCode = $survey->language;
         }
 
-        //no survey ID? -> come and get one
-        if (!isset($surveyid)) {
-            $surveyid = returnGlobal('sid');
-        }
-
         // Set language for questions and answers to base language of this survey
         $language = $sLanguageCode;
+        $surveyid = (int) $surveyid;
 
         if ($q2show == 'all') {
             $summarySql = " SELECT gid, parent_qid, qid, type "
@@ -3727,8 +3762,9 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
                 }
 
                 if ($field['type'] == Question::QT_F_ARRAY || $field['type'] == "Question::QT_H_ARRAY_COLUMN") {
+                    $db = Yii::app()->db;
                     //Get answers. We always use the answer code because the label might be too long elsewise
-                    $query = "SELECT code, answer FROM {{answers}} a JOIN {{answer_l10ns}} l ON a.aid = l.aid  WHERE a.qid='" . $field['qid'] . "' AND a.scale_id=0 AND l.language='{$language}' ORDER BY a.sortorder, l.answer";
+                    $query = "SELECT code, answer FROM {{answers}} a JOIN {{answer_l10ns}} l ON a.aid = l.aid  WHERE a.qid={$db->quoteValue($field['qid'])} AND a.scale_id=0 AND l.language={$db->quoteValue($language)} ORDER BY a.sortorder, l.answer";
                     $result = Yii::app()->db->createCommand($query)->query();
 
                     //check all the answers
@@ -3891,6 +3927,12 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
      */
     public function generate_statistics($surveyid, $allfields, $q2show = 'all', $usegraph = 0, $outputType = 'pdf', $outputTarget = 'I', $sLanguageCode = null, $browse = true)
     {
+        if (!isset($surveyid)) {
+            $surveyid = (int) returnGlobal('sid');
+        } else {
+            $surveyid = (int) $surveyid;
+        }
+
         $survey = Survey::model()->findByPk($surveyid);
         $aStatisticsData = array(); //astatdata generates data for the output page's javascript so it can rebuild graphs on the fly
         //load surveytranslator helper
@@ -3916,11 +3958,6 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
          * get/set Survey Details
          */
 
-        //no survey ID? -> come and get one
-        if (!isset($surveyid)) {
-            $surveyid = returnGlobal('sid');
-        }
-
         // Set language for questions and answers to base language of this survey
         $language = $sLanguageCode;
 
@@ -3945,8 +3982,9 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
                 }
 
                 if ($field['type'] == "F" || $field['type'] == "H") {
+                    $db = Yii::app()->db;
                     //Get answers. We always use the answer code because the label might be too long elsewise
-                    $query = "SELECT code, answer FROM {{answers}} a JOIN {{answer_l10ns}} l ON a.aid = l.aid  WHERE a.qid='" . $field['qid'] . "' AND a.scale_id=0 AND l.language='{$language}' ORDER BY a.sortorder, l.answer";
+                    $query = "SELECT code, answer FROM {{answers}} a JOIN {{answer_l10ns}} l ON a.aid = l.aid  WHERE a.qid={$db->quoteValue($field['qid'])} AND a.scale_id=0 AND l.language={$db->quoteValue($language)} ORDER BY a.sortorder, l.answer";
                     $result = Yii::app()->db->createCommand($query)->query();
 
                     //check all the answers
@@ -4029,9 +4067,6 @@ protected function displayAggrSimpleResults($outputs, $results, $rt, $labels, $o
         /**
          * Start generating
          */
-
-
-
         $selects = buildSelects($allfields, $surveyid, $language);
 
         //count number of answers
