@@ -27,6 +27,9 @@ The model defines the benefits of open source across three dimensions:
 
 Every organization will be at different stages of maturity across these dimensions. The OSMM creates an organizational baseline that you can use to define and achieve the ideal target state that works best for _your_ organization.
 
+## Try the OSMM!
+You can try a live instance of the Open Source Maturity model at https://survey.osmm.finos.org/318556?lang=en. We welcome your feedback and [please open issues](https://github.com/finos-labs/osmm) to help us improve the model. 
+
 ## What you'll find in this repository
 
 The project contains three primary parts:
