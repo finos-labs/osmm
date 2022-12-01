@@ -36,8 +36,8 @@ You can try a live instance of the Open Source Maturity model at https://survey.
 
 The project contains three primary parts:
 
-1. [User documentation](./docs/user/): Definitions and explanations for everything in the OSMM, as well as guidance for how to use OSMM output to help develop a plan for next steps for your organization
-1. [Admin documentation](./docs/admin/): How to operate your own instance of the OSMM, including details about how the model generates its output
+1. [User documentation](./docs/user/intro-to-osmm.md): Definitions and explanations for everything in the OSMM, as well as guidance for how to use OSMM output to help develop a plan for next steps for your organization
+1. [Admin documentation](./docs/admin/environment-setup.md): How to operate your own instance of the OSMM, including details about how the model generates its output
 1. [OSMM data files](./data): Files for import into [LimeSurvey](http://limesurvey.org). These files contain all of the questions and associated data that's used by the OSMM to generate its output. The files also include the scripts necessary for creating the charts included with the output.
 
 ## How to use the OSMM
@@ -50,7 +50,7 @@ Our [Contributors Guide](./CONTRIBUTING.md) details how to get answers to your O
 
 ## Governance
 
-This blueprint implements https://github.com/finos/community/tree/master/governance#open-source-software-projects
+This blueprint implements https://community.finos.org/docs/governance/#open-source-software-projects
 
 ## Licensing
 
@@ -60,4 +60,6 @@ Please see the [LICENSES](./LICENSES/) directory for the complete text for the p
 
 ## Attribution
 
-<a href="https://www.wipro.com/open-source/"><img src="./docs/img/wipro-logo.png" alt="Wipro logo" width="88px" hspace="5" style="vertical-align: middle;" /></a>The initial version of the Open Source Maturity Model was developed by and contributed to FINOS by [Wipro Limited](https://www.wipro.com/open-source/).
+<a href="https://www.wipro.com/open-source/"><img src="./docs/img/wipro-logo.png" alt="Wipro logo" width="88px" hspace="5" style="vertical-align: middle;" /></a>
+
+The initial version of the Open Source Maturity Model was developed by and contributed to [FINOS](https://finos.org) by [Wipro Limited](https://www.wipro.com/open-source/).
