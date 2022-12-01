@@ -3,11 +3,12 @@ SPDX-FileCopyrightText: 2021 Wipro, Ltd.
 
 SPDX-License-Identifier: CC-BY-SA-4.0
  -->
+
 # Open Source Maturity Model
 
 <img src="./docs/img/finos-logotype.png" alt="FINOS logo" width="250px" hspace="5" style="vertical-align: middle;" />
 
-This repository contains documentation, scripts, and data files related to the Open Source Maturity Model. 
+This repository contains documentation, scripts, and data files related to the Open Source Maturity Model.
 
 The model is itself an open source project and is free to use, study, improve, and redistribute according to the license requirements.
 
@@ -17,7 +18,7 @@ The Open Source Maturity Model (OSMM) allows you to understand where your organi
 
 By answering a series of questions, the OSMM framework evaluates your organization's open source maturity, providing a snapshot of its current stage. This stage is based on your organization's current culture, policies, processes, practices, and resources.
 
-<img src="./docs/img/dimensions-elements-stages.png" alt="A grid summarizing the Dimension, Elements, and Stages of the OSMM" width="250px" style="vertical-align: middle;float:left; margin-right:25px;" />
+![A grid summarizing the Dimension, Elements, and Stages of the OSMM](./docs/img/dimensions-elements-stages.png)
 
 The model defines the benefits of open source across three dimensions:
 
@@ -28,7 +29,8 @@ The model defines the benefits of open source across three dimensions:
 Every organization will be at different stages of maturity across these dimensions. The OSMM creates an organizational baseline that you can use to define and achieve the ideal target state that works best for _your_ organization.
 
 ## Try the OSMM!
-You can try a live instance of the Open Source Maturity model at https://survey.osmm.finos.org/318556?lang=en. We welcome your feedback and [please open issues](https://github.com/finos-labs/osmm) to help us improve the model. 
+
+You can try a live instance of the Open Source Maturity model at https://survey.osmm.finos.org/318556?lang=en. We welcome your feedback and [please open issues](https://github.com/finos-labs/osmm) to help us improve the model.
 
 ## What you'll find in this repository
 
@@ -47,6 +49,7 @@ Please see the [documentation website](https://finos.github.org/osmm) for comple
 Our [Contributors Guide](./CONTRIBUTING.md) details how to get answers to your OSMM questions, where and how to report bugs and feature requests, and how to participate in the community.
 
 ## Governance
+
 This blueprint implements https://github.com/finos/community/tree/master/governance#open-source-software-projects
 
 ## Licensing
