@@ -30,7 +30,7 @@ Every organization will be at different stages of maturity across these dimensio
 
 ## Try the OSMM!
 
-You can try a live instance of the Open Source Maturity model at https://survey.osmm.finos.org/318556?lang=en. We welcome your feedback and [please open issues](https://github.com/finos-labs/osmm) to help us improve the model.
+You can try a live instance of the Open Source Maturity model at https://survey.osmm.finos.org/551476. We welcome your feedback and [please open issues](https://github.com/finos-labs/osmm) to help us improve the model.
 
 ## What you'll find in this repository
 
