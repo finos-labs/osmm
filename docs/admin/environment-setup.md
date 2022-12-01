@@ -42,6 +42,7 @@ cp -Rf ./tmp/ ~/stack/limesurvey/
 cp -Rf ./upload/ ~/stack/limesurvey/
 cp -Rf ./application/config/config.php ~/stack/limesurvey/application/config
 sudo chmod -R 777 ~/stack/limesurvey/tmp/
+sudo chown -R daemon:daemon ~/stack/limesurvey/*
 ```
 10. Cleanup downloads using `rm -rf ~/*.zip`
 
