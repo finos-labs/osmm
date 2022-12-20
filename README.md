@@ -32,7 +32,7 @@ Every organization will be at different stages of maturity across these dimensio
 Read the launch announcement of the Open Source Maturity Model at the Open Source in Finance Forum, New York City, on 8th December 2022 on the FINOS website here ... https://www.finos.org/blog/open-source-maturity-model-launch
 
 ## Take the OSMM beta
-You now partake in the live beta instance of the Open Source Maturity model at https://survey.osmm.finos.org/551476. We welcome your feedback and [please open issues](https://github.com/finos-labs/osmm) to help us improve the model. 
+You now partake in the live beta instance of the Open Source Maturity model at https://survey.osmm.finos.org/551476. We welcome your feedback and [please open GitHub Issues](https://github.com/finos-labs/osmm/issues) to help us improve the maturity model. 
 
 ## What you'll find in this repository
 
@@ -51,7 +51,7 @@ Please see the [documentation on GitHub](https://github.com/finos-labs/osmm/blob
 Our [Contributors Guide](./CONTRIBUTING.md) details how to get answers to your OSMM questions, where and how to report bugs and feature requests, and how to participate in the community.
 
 ## Governance
-This blueprint implements https://github.com/finos/community/tree/master/governance#open-source-software-projects
+This project implements https://community.finos.org/docs/governance/#open-source-software-projects
 
 ## Licensing
 
