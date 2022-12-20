@@ -44,7 +44,7 @@ The project contains three primary parts:
 
 ## How to use the OSMM
 
-Please see the [documentation website](https://finos.github.org/osmm) for complete instructions for using and operating the OSMM.
+Please see the [documentation on GitHub](https://github.com/finos-labs/osmm/blob/main/docs/user/intro-to-osmm.md) for instructions for using and operating the OSMM.
 
 ## Contributing to the OSMM
 
