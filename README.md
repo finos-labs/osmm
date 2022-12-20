@@ -29,7 +29,7 @@ Every organization will be at different stages of maturity across these dimensio
 
 ## FINOS launches the Open Source Maturity Model
 
-Read the launch announcement of the Open Source Maturity Model at the Open Source in Finance Forum, New York City, on 8th December 2022 on the FINOS webite here ... https://www.finos.org/blog/open-source-maturity-model-launch
+Read the launch announcement of the Open Source Maturity Model at the Open Source in Finance Forum, New York City, on 8th December 2022 on the FINOS website here ... https://www.finos.org/blog/open-source-maturity-model-launch
 
 ## Take the OSMM beta
 You now partake in the live beta instance of the Open Source Maturity model at https://survey.osmm.finos.org/551476. We welcome your feedback and [please open issues](https://github.com/finos-labs/osmm) to help us improve the model. 
