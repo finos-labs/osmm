@@ -50,6 +50,13 @@ You can now access the LS instance on `https://<URL>/admin`, login and make sure
 
 To debug errors, try to `cat ~/stack/apache2/logs/error_log`.
 
+## SSL Cert updates
+
+```
+sudo /opt/bitnami/bncert-tool
+```
+See https://docs.bitnami.com/aws/faq/administration/generate-configure-certificate-letsencrypt/
+
 ## Restarting limesurvey
 
 See https://docs.bitnami.com/aws/apps/limesurvey/administration/control-services/
