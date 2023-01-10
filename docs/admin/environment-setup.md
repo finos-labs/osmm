@@ -49,3 +49,11 @@ sudo chown -R daemon:daemon ~/stack/limesurvey/*
 You can now access the LS instance on `https://<URL>/admin`, login and make sure that everything is in place.
 
 To debug errors, try to `cat ~/stack/apache2/logs/error_log`.
+
+## Restarting limesurvey
+
+See https://docs.bitnami.com/aws/apps/limesurvey/administration/control-services/
+
+```
+sudo /opt/bitnami/ctlscript.sh restart
+```
