@@ -15566,7 +15566,7 @@
    <row>
     <id><![CDATA[900]]></id>
     <qid><![CDATA[900]]></qid>
-    <question><![CDATA[Which of the  below concerns related to open source are most important at your organization? (select upto three)]]></question>
+    <question><![CDATA[Which of the  below concerns related to open source are most important at your organization? (select upt to three)]]></question>
     <help/>
     <script/>
     <language><![CDATA[en]]></language>
@@ -15686,7 +15686,7 @@
    <row>
     <id><![CDATA[915]]></id>
     <qid><![CDATA[915]]></qid>
-    <question><![CDATA[Does every open source activity, decision, strategic element is aligned one of the corporate strategic objectives it supports?]]></question>
+    <question><![CDATA[Does every open source activity, decision and strategic element align with one of the corporate strategic objectives it supports?]]></question>
     <help/>
     <script/>
     <language><![CDATA[en]]></language>
