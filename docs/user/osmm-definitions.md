@@ -77,8 +77,8 @@ A leading organization has a fully formed strategy, effective policies and proce
 
 -   Developers (consume, contribute, publication) - multiple developers have reached committer/maintainer status in external projects, they are contributing actively to many projects and have open sourced at least one software asset.
 -   Legal (compliance, IP) - members of the legal team are actively engaged in the community getting continuing education units (CEU) credits on open source topics, they may be training other lawyers and publishing articles
--   Security (risk mitigation) - active in the external security community speaking and publishing articles on open source.
--   Executive (strategy, planning, support) - same as above.
+-   Security (risk mitigation) - active in the external security community speaking and publishing articles on open source
+-   Executive (strategy, planning, support) - same as above
 
 ### Dimensions
 
@@ -90,7 +90,7 @@ The act of creating and implementing a plan to realize the benefits of open sour
 
 -   **Goals, objectives, resources** - creating multi-stage goals and objectives with associated KPIs facilitating an organization's upward growth through the stages to the optimal for that particular organization
 -   **Corporate alignment** - that part of the strategy addressing the alignment and engagement of executives with the open source mission and eventual alignment of corporate and open source goals
--   **Community and ecosystem engagement** - part of the strategy that addresses how an organization will select which technologies, projects and foundations to engage in at what time with what resources to achieve which goals
+-   **Community and ecosystem engagement** - the part of the strategy that addresses how an organization will select which technologies, projects and foundations to engage in at what time with what resources to achieve which goals
 -   **Operations** - the part of the strategy plan that details out the implementation plan, the resources required to achieve all aspects of the strategy plan
 -   **Culture** - the identification of how open source can be used to support an existing culture or help with cultural transformation and should include inner source
 
