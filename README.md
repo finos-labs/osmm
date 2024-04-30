@@ -3,6 +3,11 @@ SPDX-FileCopyrightText: 2021 Wipro, Ltd.
 
 SPDX-License-Identifier: CC-BY-SA-4.0
  -->
+
+> [!WARNING]  
+> This repository is archived, OSMM became [the FINOS Open Source Maturity Checklist](https://osr.finos.org/docs/bok/OSMM/Checklist), which is part of the FINOS Open Source Readiness Special Interest group
+
+
 # Open Source Maturity Model
 
 <img src="./docs/img/finos-logotype.png" alt="FINOS logo" width="250px" hspace="5" style="vertical-align: middle;" />
